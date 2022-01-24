@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.meywork.myflutter_cubit">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="myflutter_cubit"
         android:name="${applicationName}"
