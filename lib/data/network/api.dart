@@ -53,4 +53,8 @@ class Api{
     };
   }
 
+  static Future getUsers(int since)async{
+    return await _handler.get(userUrl+'?since=$since');
+  }
+
 }

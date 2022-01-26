@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 import 'package:myflutter_cubit/data/database/my_database.dart';
 import 'package:myflutter_cubit/models/user_model.dart';
 import 'package:myflutter_cubit/utils/utils.dart';
-import 'auth_service.dart';
 
 part 'auth_state.dart';
 

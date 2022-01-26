@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:myflutter_cubit/config/themes.dart';
-import 'package:myflutter_cubit/cubits/auth_cubit.dart';
-import 'package:myflutter_cubit/cubits/auth_service.dart';
+import 'package:myflutter_cubit/cubits/auth/auth_cubit.dart';
 import 'package:myflutter_cubit/data/database/my_database.dart';
 import 'package:myflutter_cubit/screen/login.dart';
 

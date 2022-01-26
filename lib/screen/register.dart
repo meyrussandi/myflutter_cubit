@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:myflutter_cubit/config/config.dart';
-import 'package:myflutter_cubit/cubits/auth_cubit.dart';
+import 'package:myflutter_cubit/cubits/auth/auth_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:myflutter_cubit/models/user_model.dart';
 import 'package:myflutter_cubit/utils/page_primary.dart';
