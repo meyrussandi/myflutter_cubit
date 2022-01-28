@@ -20,7 +20,7 @@ class UserGitInitial extends UserGitState {}
 
 class UserGitFetched extends UserGitState {
   const UserGitFetched({required int since,required List<UserGitModel> items})
-      : super(usersgit: items);
+      : super(usersgit: items, since: since);
 }
 
 class UserGitLoading extends UserGitState {}
@@ -29,9 +29,9 @@ class UserGitEmpty extends UserGitState {
 }
 
 class UserGitFailed extends UserGitState {}
-class UserGitLoadMore extends UserGitState {
+class UserGitLoadMore extends UserGitFetched {
   const UserGitLoadMore({
     required int since,
     required List<UserGitModel> items
-}) : super(usersgit: items, since: since);
+}) : super(items: items, since: since);
 }

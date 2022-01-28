@@ -31,7 +31,7 @@ class PagePrimary extends StatelessWidget {
           :Scaffold(
         body: SingleChildScrollView(
           child: Container(
-            padding: padding??EdgeInsets.all(20),
+            padding: padding??EdgeInsets.all(0),
             height: MediaQuery.of(context).size.height,
             decoration: const BoxDecoration(
                 gradient: MyColors.gradient1

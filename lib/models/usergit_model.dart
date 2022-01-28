@@ -137,4 +137,9 @@ class UserGitModel {
     "site_admin": siteAdmin,
     "score": score,
   };
+
+  @override
+  String toString() {
+    return 'id $id';
+  }
 }

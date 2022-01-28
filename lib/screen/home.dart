@@ -11,54 +11,82 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PagePrimary(
-      appBar: AppBar(
-        title:  const Text('Github User')
+    return Scaffold(
+      appBar: AppBar(title: const Text('Github User')),
+      floatingActionButton: BlocProvider(
+        create: (context) => UserGitCubit(UsersGitService()),
+        child: FloatingActionButton(
+          onPressed: () {
+            final users = context.read<UserGitCubit>();
+            users.refresh();
+          },
+          child: const Icon(Icons.refresh),
+        ),
       ),
-      child: Column(
-        children: [
-          BlocBuilder<AuthCubit, AuthState>(
-              builder: (context, authState) {
-            if (authState is Authenticated) {
-              return BlocProvider(
-                create: (_) => UserGitCubit(UsersGitService()),
-                child: BlocBuilder<UserGitCubit, UserGitState>(
-                    builder: (context, userGitState) {
-                      final users = context.read<UserGitCubit>();
-                      if (userGitState is UserGitLoading) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      if (userGitState is UserGitEmpty) {
-                        return const Center(
-                          child: Text('No Data'),
-                        );
-                      }
-                      if (userGitState is UserGitFailed) {
-                        return const Center(
-                          child: Text('Fetching data failed.'),
-                        );
-                      }
-                      return Expanded(
-                          child: RefreshIndicator(
-                            onRefresh: users.refresh,
-                            child: ListView.separated(
-                              itemBuilder: (BuildContext context, int index) =>
-                                  CardUser(userGitModel: userGitState.usersgit[index]),
-                              separatorBuilder: (BuildContext context, int index) =>
-                              const Divider(),
-                              itemCount: userGitState.usersgit.length,
-                            ),
-                          ));
-                    }),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: Insets.lg),
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(gradient: MyColors.gradient1),
+        child: BlocBuilder<AuthCubit, AuthState>(builder: (context, authState) {
+          if (authState is Authenticated) {
+            return BlocBuilder<UserGitCubit, UserGitState>(
+                builder: (context, userGitState) {
+              final users = context.read<UserGitCubit>();
+              if (userGitState is UserGitLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (userGitState is UserGitEmpty) {
+                return const Center(
+                  child: Text('No Data'),
+                );
+              }
+              if (userGitState is UserGitFailed) {
+                return const Center(
+                  child: Text('Fetching data failed.'),
+                );
+              }
+              return Column(
+                children: [
+                  Expanded(
+                      child: LayoutBuilder(builder: (context, constraint) {
+                    return Stack(
+                      children: [
+                        RefreshIndicator(
+                          onRefresh: users.refresh,
+                          child: ListView.separated(
+                            controller: users.scrollController,
+                            itemBuilder: (BuildContext context, int index) =>
+                                CardUser(
+                                    userGitModel:
+                                        userGitState.usersgit[index]),
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    const Divider(),
+                            itemCount: userGitState.usersgit.length,
+                          ),
+                        ),
+                        if (userGitState is UserGitLoadMore) ...[
+                          Positioned(
+                              left: 0,
+                              bottom: 0,
+                              child: Container(
+                                  height: 80,
+                                  width: constraint.maxWidth,
+                                  child: const Center(
+                                    child: CircularProgressIndicator(),
+                                  )))
+                        ]
+                      ],
+                    );
+                  })),
+                ],
               );
-            }
-            return Center(child: Text('Silahkan login'));
-          }),
-          verticalSpace(Insets.lg),
-
-        ],
+            });
+          }
+          return Center(child: Text('Silahkan login'));
+        }),
       ),
     );
   }
